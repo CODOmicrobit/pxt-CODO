@@ -1,9 +1,9 @@
 /**
- * Librairie A4 technologie pour robot <nom du robot>.
+ * Librairie Makecode pour robot CODO.
  */
 
 
-//% weight=100 color=#004696 icon="\uf121" block="CODO" advanced=false
+//% weight=1 color=#004696 icon="\uf121" block="CODO" advanced=false
 namespace A4_Robot_Driver {
     export enum MotorDirection {
         //% block="Avancer"
