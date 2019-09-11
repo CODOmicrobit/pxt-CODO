@@ -1,2 +1,2 @@
-# pxt-CODO
-Makecode extension for CODO robot
+# CODO
+Grove micro:bit Project Board
