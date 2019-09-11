@@ -1,7 +1,7 @@
 {
-    "name": "A4-Technologie-Extension",
+    "name": "CODO",
     "version": "0.0.1",
-    "description": "add description here",
+    "description": "Grove micro:bit project board",
     "license": "MIT",
     "dependencies": {
         "core": "*"
