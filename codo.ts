@@ -135,7 +135,7 @@ namespace CODO {
      * @param pin servomotor pin (right or left)
      */
     //% blockId=A4_Robot_Driver_servo_degrees
-    //% block="positionner le servo sur |%pin| à |%angle| degrés"
+    //% block="Set the servomotor |%pin| at |%angle| degree"
     //% parts="A4_Robot_Driver" advanced=false
     //% angle.shadow="protractorPicker"
     //% angle.defl=90
@@ -183,7 +183,7 @@ namespace CODO {
      * @param selected color
      */
     //% blockId="grove_color_get_color" 
-    //% block="Get %Color value from grove color sensor"
+    //% block="Color - %Color value"
     //% group="Sensors"
     //% block.loc.fr="Valeur de la couleur %Color du capteur de couleur grove"
     //% jsdoc = "Grab sensor value from grove color sensor"
