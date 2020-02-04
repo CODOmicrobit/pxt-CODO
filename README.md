@@ -6,6 +6,8 @@ Authors : A4 Technologie
 
 Date : 02/02/2020
 
+![](icon.png)  
+
 ## API :
 ** function get_color(col: Color) **
 
