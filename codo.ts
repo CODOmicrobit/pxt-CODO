@@ -62,7 +62,7 @@ namespace CODO {
     export let identifiant = 0;
     
     /**
-     * Control Robot speed [0-100]
+     * Control Robot speed [0-100%]
      * @param dir direction
      * @param speed speed in %
      */
