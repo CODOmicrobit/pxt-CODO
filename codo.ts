@@ -116,7 +116,7 @@ namespace CODO {
     //% name.fieldOptions.tooltips="false"
     //% name.fieldOptions.width="0"
     //% group="Sensors"
-    export function measDistCm(name: DigitalPin): number {
+    export function measureDistanceCentimeter(name: DigitalPin): number {
         let duration = 0;
         let distance = 0;
         pins.digitalWritePin(name, 0); //make sure pin is low
