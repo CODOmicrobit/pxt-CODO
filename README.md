@@ -10,26 +10,26 @@ Date : 02/02/2020
 
 ## API :
 
-Motion :
+### Motion :
 
-** function robotMove(dir: RobotDirection, speed: number) **
+**function robotMove(dir: RobotDirection, speed: number)**
 Control Robot speed [0-100%] and direction [forward,backward,turn left, turn right ...]
 
-** function setServoMotor(pin: AnalogPin, angle: number) **
+**function setServoMotor(pin: AnalogPin, angle: number)**
 Set the servomotor position
 
-** function motorDir(motor: Motors, dir: MotorDirection) **
+**function motorDir(motor: Motors, dir: MotorDirection)**
 Change the motor direction
 
-** function motorSpeed(motor: Motors, speed: number) **
+**function motorSpeed(motor: Motors, speed: number)**
 Change the motor speed
 
-Sensors :
+### Sensors :
 
-** function measDistCm(name: DigitalPin) **
+**function measDistCm(name: DigitalPin)**
 Return distance from ultrasonic range sensor
     
-** function get_color(col: Color) **
+**function get_color(col: Color)**
 Return color from i2c Grove Color Sensor v1.3 or v2.0. It autodetect the sensor version. Output value : [0;65534]
 
 ## License
