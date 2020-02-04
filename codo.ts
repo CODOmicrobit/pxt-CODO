@@ -1,58 +1,58 @@
 /**
- * Librairie Makecode pour robot CODO.
+ * Library for Grove micro:bit project board https://www.a4.fr/carte-de-prototypage-microbit-codo.html
  */
 
 
 //% weight=1 color=#004696 icon="\uf121" block="CODO" advanced=false
-namespace A4_Robot_Driver {
+namespace CODO {
     export enum MotorDirection {
-        //% block="Avancer"
+        //% block="Forward"
         Forward = 1,
-        //% block="Reculer"
+        //% block="Backward"
         Reverse = 2,
-        //% block="Arrêter"
+        //% block="Stop"
         Stop = 0
     }
 
     export enum RobotDirection {
-        //% block="Avancer"
+        //% block="Forward"
         Forward,
-        //% block="Reculer"
+        //% block="Backward"
         Reverse,
-        //% block="Virer à droite"
+        //% block="Turn Right"
         TurnRigh,
-        //% block="Virer à gauche"
+        //% block="Turn Left"
         TurnLef,
-        //% block="Tourner à droite"
+        //% block="Rotate Right"
         RotateRight,
-        //% block="Tourner à gauche"
+        //% block="Rotate Left"
         RotateLef,
-        //% block="Arrêter"
+        //% block="Stop"
         Stop
     }
 
     export enum Motors {
         //%blockId=A4_Robot_Driver_motor_one
-        //% block="moteur gauche"
+        //% block="left motor"
         Motor1,
         //%blockId=A4_Robot_Driver_motor_two
-        //% block="moteur droit"
+        //% block="right motor"
         Motor2,
         //%blockId=A4_Robot_Driver_motor_full
-        //% block="moteurs droit et gauche"
+        //% block="left and right motor"
         MotorFull
     }
 
-    export let _speed_left = 700; //1023 = 100% de la vitesse
+    export let _speed_left = 700; //1023 = 100% speed
     export let _speed_right = 700;
-    export let _dir_right = 1; //0 = arrêt, 1 = avancer, 2 = reculer
+    export let _dir_right = 1; //0 = stop, 1 = forward, 2 = backward
     export let _dir_left = 1;
 
 
     /**
-     * Permet de controler les déplacements et la vitesse du robot
-     * @param dir sens de déplacement du robot
-     * @param speed vitesse en pourcentage du moteur
+     * Control Robot speed
+     * @param dir direction
+     * @param speed speed in %
      */
 
     //% blockId=A4_Robot_Driver_Robot_Move
