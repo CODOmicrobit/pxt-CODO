@@ -15,7 +15,7 @@ Get color from i2c Grove Color Sensor v1.3 or v2.0. It autodetect the sensor ver
 
 MIT
 
-Copyright (c) 2020
+Copyright (c) 2020, A4 Technologie
 
 ## Supported targets
 
