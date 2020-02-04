@@ -4,6 +4,7 @@
 
 
 //% weight=1 color=#004696 icon="\uf121" block="CODO" advanced=false
+//% groups=['Motion', 'Sensors']
 namespace CODO {
     export enum MotorDirection {
         //% block="Forward"
@@ -42,24 +43,35 @@ namespace CODO {
         //% block="left and right motor"
         MotorFull
     }
+    
+    export enum Color {
+        //% block="Red"
+        Red,
+        //% block="Green"
+        Green,
+        //% block="Blue"
+        Blue,
+        //% block="Clear"
+        Clear
+    }
 
     export let _speed_left = 700; //1023 = 100% speed
     export let _speed_right = 700;
     export let _dir_right = 1; //0 = stop, 1 = forward, 2 = backward
     export let _dir_left = 1;
-
-
+    export let identifiant = 0;
+    
     /**
      * Control Robot speed
      * @param dir direction
      * @param speed speed in %
      */
-
     //% blockId=A4_Robot_Driver_Robot_Move
     //% block="CODO %dir| speed %speed %"
     //% speed.min=0 speed.max=100
     //% parts="A4_Robot_Driver" advanced=false
     //% speed.defl=75
+    //% group="Motion"
     export function robotMove(dir: RobotDirection, speed: number): void {
         setSpeed(Motors.MotorFull, speed);
         switch (dir) {
@@ -94,16 +106,16 @@ namespace CODO {
 
 
     /**
-     * Mesure la distance à partir d'un capteur à ultrason
-     * @param pin Pin ou est branché le capteur
+     * get distance from ultrasonic range sensor
+     * @param pin Input pin
      */
-
     //% blockId=A4_Robot_Driver_ultrasonic_cm 
-    //% block="Ultrason - Mesurer la distance|%name| (cm)"
+    //% block="Ultrasonic - Measure distance|%name| (cm)"
     //% name.fieldEditor="gridpicker" 
     //% name.fieldOptions.columns=5
     //% name.fieldOptions.tooltips="false"
     //% name.fieldOptions.width="0"
+    //% group="Sensors"
     export function measDistCm(name: DigitalPin): number {
         let duration = 0;
         let distance = 0;
@@ -115,63 +127,159 @@ namespace CODO {
         duration = pins.pulseIn(name, PulseValue.High, 50000); // Max duration 50 ms - receive echo
         distance = duration * 153 / 29 / 2 / 100;
         Math.constrain(distance, 0, 500);
-        //basic.pause(50);
         return distance;
     }
 
-
     /**
-     * Configure la position angulaire d'un servomoteur
-     * @param pin choix du moteur: droit ou gauche
+     * Set the servomotor position
+     * @param pin servomotor pin (right or left)
      */
-
     //% blockId=A4_Robot_Driver_servo_degrees
     //% block="positionner le servo sur |%pin| à |%angle| degrés"
     //% parts="A4_Robot_Driver" advanced=false
     //% angle.shadow="protractorPicker"
     //% angle.defl=90
+    //% group="Motion"
     export function setServoMotor(pin: AnalogPin, angle: number): void {
         pins.servoWritePin(pin, Math.constrain(angle, 0, 180));
     }
 
-
     /**
-     * Permet de changer la direction du moteur sélectionné
-     * @param motor choix du moteur: droit ou gauche
-     * @param dir sens de rotation du moteur comparé au sens du robot
+     * Change the motor direction
+     * @param motor selection (left, right)
+     * @param dir rotation direction (forward, backward)
      */
 
     //% blockId=A4_Robot_Driver_motor_dir
     //% block="%motor| %dir"
     //% parts="A4_Robot_Driver" advanced=true
     //% motor.defl=MotorFull
+    //% group="Motion"
     export function motorDir(motor: Motors, dir: MotorDirection): void {
         setDir(motor, dir);
         setMotors();
     }
 
-
     /**
-     * Permet de changer la vitesse du moteur sélectionné
-     * @param motor choix du moteur: droit ou gauche
-     * @param speed vitesse en pourcentage du moteur
+     * Change the motor speed
+     * @param motor selection (left, right)
+     * @param new speed (0-100%)
      */
     
     //% blockId=A4_Robot_Driver_Motor_Speed
-    //% block="Régler la vitesse %motor| à %speed"
+    //% block="Set speed %motor| to %speed %"
     //% speed.min=0 speed.max=100
     //% parts="A4_Robot_Driver" advanced=true
     //% speed.defl=75
+    //% group="Motion"
     export function motorSpeed(motor: Motors, speed: number): void {
         setSpeed(motor, speed);
         setMotors();
     }
 
+     /**
+     * Get color from I2C Grove Color Sensor v1.3 or v2.0
+     * output value : [0;65534]
+     * @param selected color
+     */
+    //% blockId="grove_color_get_color" 
+    //% block="Get %Color value from grove color sensor"
+    //% group="Sensors"
+    //% block.loc.fr="Valeur de la couleur %Color du capteur de couleur grove"
+    //% jsdoc = "Grab sensor value from grove color sensor"
+    export function get_color(col: Color): NumberFormat.UInt16BE {
+        let nums, red, green, blue, clear: number;
 
+        if (identifiant == 0) {   // No sensor previously detected
+            pins.i2cWriteNumber(57, 132, NumberFormat.UInt8BE, false);
+            nums = pins.i2cReadNumber(57, NumberFormat.UInt8BE, false);
+            if (nums == 17) {     // Grove Sensor v1.3 detected
+                identifiant = 1;
+                pins.i2cWriteNumber(57, 129, NumberFormat.UInt8BE, false);
+                pins.i2cWriteNumber(57, 0, NumberFormat.UInt8BE, true);
+                pins.i2cWriteNumber(57, 135, NumberFormat.UInt8BE, false);
+                pins.i2cWriteNumber(57, 48, NumberFormat.UInt8BE, true);
+                pins.i2cWriteNumber(57, 128, NumberFormat.UInt8BE, false);
+                pins.i2cWriteNumber(57, 3, NumberFormat.UInt8BE, true);
+                basic.pause(50);
+            } else {
+                pins.i2cWriteNumber(41, 146, NumberFormat.UInt8BE, false);
+                nums = pins.i2cReadNumber(41, NumberFormat.UInt8BE, false);
+                if (nums == 68) {     // Grove Sensor v2 detected 
+                    identifiant = 2;
+                    pins.i2cWriteNumber(41, 129, NumberFormat.UInt8BE, false);
+                    pins.i2cWriteNumber(41, 249, NumberFormat.UInt8BE, true);
+                    pins.i2cWriteNumber(41, 143, NumberFormat.UInt8BE, false);
+                    pins.i2cWriteNumber(41, 2, NumberFormat.UInt8BE, true);
+                    pins.i2cWriteNumber(41, 128, NumberFormat.UInt8BE, false);
+                    pins.i2cWriteNumber(41, 1, NumberFormat.UInt8BE, true);
+                    basic.pause(50);
+                    pins.i2cWriteNumber(41, 128, NumberFormat.UInt8BE, false);
+                    pins.i2cWriteNumber(41, 3, NumberFormat.UInt8BE, true);
+                    basic.pause(500);
+                }
+            }
+        }
+
+        if (identifiant == 1) {    // Grove Sensor v1.3 detected
+            switch (col) {
+                case Color.Red:
+                    pins.i2cWriteNumber(57, 210, NumberFormat.UInt8BE, false);
+                    red = pins.i2cReadNumber(57, NumberFormat.UInt16BE, true);
+                    return swap16(red)
+                    break
+                case Color.Green:
+                    pins.i2cWriteNumber(57, 208, NumberFormat.UInt8BE, false);
+                    green = pins.i2cReadNumber(57, NumberFormat.UInt16BE, true);
+                    return swap16(green)
+                    break
+                case Color.Blue:
+                    pins.i2cWriteNumber(57, 212, NumberFormat.UInt8BE, false);
+                    blue = pins.i2cReadNumber(57, NumberFormat.UInt16BE, true);
+                    return swap16(blue)
+                    break
+                case Color.Clear:
+                    pins.i2cWriteNumber(57, 214, NumberFormat.UInt8BE, false);
+                    clear = pins.i2cReadNumber(57, NumberFormat.UInt16BE, true);
+                    return swap16(clear)
+                    break
+            }
+        }
+        else if (identifiant == 2) {
+            switch (col) {
+                case Color.Red:
+                    pins.i2cWriteNumber(41, 150, NumberFormat.UInt8BE, false);
+                    red = pins.i2cReadNumber(41, NumberFormat.UInt16BE, true);
+                    return swap16(red)
+                    break
+                case Color.Green:
+                    pins.i2cWriteNumber(41, 152, NumberFormat.UInt8BE, false);
+                    green = pins.i2cReadNumber(41, NumberFormat.UInt16BE, true);
+                    return swap16(green)
+                    break
+                case Color.Blue:
+                    pins.i2cWriteNumber(41, 154, NumberFormat.UInt8BE, false);
+                    blue = pins.i2cReadNumber(41, NumberFormat.UInt16BE, true);
+                    return swap16(blue)
+                    break
+                case Color.Clear:
+                    pins.i2cWriteNumber(41, 148, NumberFormat.UInt8BE, false);
+                    clear = pins.i2cReadNumber(41, NumberFormat.UInt16BE, true);
+                    return swap16(clear)
+                    break
+            }
+            return 0;
+        }
+        return 0;
+    }
+   
     /*
      * Private functions
      */
-
+    function swap16(val: NumberFormat.UInt16BE) {
+        return ((val & 0xFF) << 8)
+            | ((val >> 8) & 0xFF);
+    }
 
     function setDir(motor: Motors, dir: MotorDirection): void {
         switch (motor) {
