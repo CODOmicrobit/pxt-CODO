@@ -67,7 +67,7 @@ namespace CODO {
      * @param speed speed in %
      */
     //% blockId=RobotDriverRobotMove
-    //% block="CODO %dir| speed %speed %"
+    //% block="CODO %dir| speed %speed \%"
     //% speed.min=0 speed.max=100
     //% parts="RobotDriver" advanced=false
     //% speed.defl=75
