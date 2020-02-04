@@ -56,7 +56,7 @@ namespace CODO {
      */
 
     //% blockId=A4_Robot_Driver_Robot_Move
-    //% block="CODO %dir| vitesse %speed"
+    //% block="CODO %dir| speed %speed"
     //% speed.min=0 speed.max=100
     //% parts="A4_Robot_Driver" advanced=false
     //% speed.defl=75
