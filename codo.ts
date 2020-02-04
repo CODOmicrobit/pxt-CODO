@@ -66,10 +66,10 @@ namespace CODO {
      * @param dir direction
      * @param speed speed in %
      */
-    //% blockId=A4_Robot_Driver_Robot_Move
+    //% blockId=RobotDriverRobotMove
     //% block="CODO %dir| speed %speed %"
     //% speed.min=0 speed.max=100
-    //% parts="A4_Robot_Driver" advanced=false
+    //% parts="RobotDriver" advanced=false
     //% speed.defl=75
     //% group="Motion"
     export function robotMove(dir: RobotDirection, speed: number): void {
@@ -109,8 +109,8 @@ namespace CODO {
      * get distance from ultrasonic range sensor
      * @param pin Input pin
      */
-    //% blockId=A4_Robot_Driver_ultrasonic_cm 
-    //% block="Ultrasonic - Measure distance|%name| (cm)"
+    //% blockId=RobotDriverultrasonic_cm 
+    //% block="ultrasonic - Measure distance|%name| (cm)"
     //% name.fieldEditor="gridpicker" 
     //% name.fieldOptions.columns=5
     //% name.fieldOptions.tooltips="false"
@@ -134,9 +134,9 @@ namespace CODO {
      * Set the servomotor position
      * @param pin servomotor pin (right or left)
      */
-    //% blockId=A4_Robot_Driver_servo_degrees
-    //% block="Set the servomotor |%pin| at |%angle| degree"
-    //% parts="A4_Robot_Driver" advanced=false
+    //% blockId=RobotDriverservodegrees
+    //% block="set the servomotor |%pin| at |%angle| degree"
+    //% parts="RobotDriver" advanced=false
     //% angle.shadow="protractorPicker"
     //% angle.defl=90
     //% group="Motion"
@@ -150,9 +150,9 @@ namespace CODO {
      * @param dir rotation direction (forward, backward)
      */
 
-    //% blockId=A4_Robot_Driver_motor_dir
-    //% block="%motor| %dir"
-    //% parts="A4_Robot_Driver" advanced=true
+    //% blockId=RobotDrivermotordir
+    //% block="set %motor| %dir"
+    //% parts="RobotDriver" advanced=true
     //% motor.defl=MotorFull
     //% group="Motion"
     export function motorDir(motor: Motors, dir: MotorDirection): void {
@@ -166,8 +166,8 @@ namespace CODO {
      * @param new speed (0-100%)
      */
     
-    //% blockId=A4_Robot_Driver_Motor_Speed
-    //% block="Set speed %motor| to %speed %"
+    //% blockId=robotdrivermotorspeed
+    //% block="set speed %motor| to %speed %"
     //% speed.min=0 speed.max=100
     //% parts="A4_Robot_Driver" advanced=true
     //% speed.defl=75
@@ -182,12 +182,12 @@ namespace CODO {
      * output value : [0;65534]
      * @param selected color
      */
-    //% blockId="grove_color_get_color" 
-    //% block="Color - %Color value"
+    //% blockId="grovecolorsensorgetcolor" 
+    //% block="color - %Color value"
     //% group="Sensors"
     //% block.loc.fr="Valeur de la couleur %Color du capteur de couleur grove"
     //% jsdoc = "Grab sensor value from grove color sensor"
-    export function get_color(col: Color): NumberFormat.UInt16BE {
+    export function color(col: Color): NumberFormat.UInt16BE {
         let nums, red, green, blue, clear: number;
 
         if (identifiant == 0) {   // No sensor previously detected
