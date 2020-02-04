@@ -8,10 +8,10 @@
     },
     "files": [
         "README.md",
-        "motors_shield.ts"
+        "codo.ts"
     ],
     "testFiles": [
-        "test1.ts"
+        "test.ts"
     ],
     "public": true,
     "yotta": {
