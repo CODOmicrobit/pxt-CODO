@@ -15,6 +15,18 @@ Date : 02/02/2020
 ```blocks
 CODO.robotMove(CODO.RobotDirection.Forward, 75)
 ```
+### Send red color value to serial line
+
+```blocks
+serial.writeLine(CODO.measureDistanceCentimeter(DigitalPin.P0))
+```
+### Rotation at 75% speed
+
+```blocks
+CODO.robotMove(CODO.RobotDirection.Forward, 75)
+CODO.motorDir(CODO.Motors.Motor1, CODO.MotorDirection.Forward)
+CODO.motorDir(CODO.Motors.Motor2, CODO.MotorDirection.Reverse)
+```
 
 ## API :
 
