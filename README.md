@@ -8,6 +8,14 @@ Date : 02/02/2020
 
 ![](icon.png)  
 
+## Basic usage :
+
+### Robot forward at 75%
+
+```blocks
+CODO.robotMove(CODO.RobotDirection.Forward, 75)
+```
+
 ## API :
 
 ### Motion :
