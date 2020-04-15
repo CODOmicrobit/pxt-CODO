@@ -2,10 +2,6 @@
 Library for Grove micro:bit project board
 https://www.a4.fr/carte-de-prototypage-microbit-codo.html
 
-Authors : A4 Technologie
-
-Date : 02/02/2020
-
 ![](icon.png)  
 
 ## Basic usage :
