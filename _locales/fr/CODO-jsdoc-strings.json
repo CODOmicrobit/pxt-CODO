@@ -1,6 +1,6 @@
 {
   "CODO": "Library for Grove micro:bit project board https://www.a4.fr/carte-de-prototypage-microbit-codo.html",
-  "CODO.color": "Get color from I2C Grove Color Sensor v1.3 or v2.0\noutput value : [0;65534]",
+  "CODO.color": "TT - Get color from I2C Grove Color Sensor v1.3 or v2.0\noutput value : [0;65534]",
   "CODO.measureDistanceCentimeter": "get distance from ultrasonic range sensor",
   "CODO.motorDir": "Change the motor direction",
   "CODO.motorDir|param|dir": "rotation direction (forward, backward)",
