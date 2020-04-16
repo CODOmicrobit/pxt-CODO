@@ -139,7 +139,7 @@ namespace CODO {
     //% parts="RobotDriver" advanced=false
     //% angle.shadow="protractorPicker"
     //% angle.defl=90
-    //% group="Motion"
+    //% group="Actuators"
     export function setServoMotor(pin: AnalogPin, angle: number): void {
         pins.servoWritePin(pin, Math.constrain(angle, 0, 180));
     }
