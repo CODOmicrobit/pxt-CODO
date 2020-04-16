@@ -4,7 +4,7 @@
 
 
 //% weight=1 color=#004696 icon="\uf121" block="CODO" advanced=false
-//% groups=['Motion', 'Sensors']
+//% groups=['Motors', 'Sensors', 'Actuators', 'Display', 'Communication']
 namespace CODO {
     export enum MotorDirection {
         //% block="Forward"
