@@ -8,6 +8,8 @@
     },
     "files": [
         "README.md",
+	"_locales/fr/CODO-strings.json",
+	"_locales/fr/CODO-jsdoc-strings.json",
         "codo.ts"
     ],
     "testFiles": [

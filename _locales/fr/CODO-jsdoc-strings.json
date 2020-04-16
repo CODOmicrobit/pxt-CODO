@@ -1,0 +1,15 @@
+{
+  "CODO": "Library for Grove micro:bit project board https://www.a4.fr/carte-de-prototypage-microbit-codo.html",
+  "CODO.color": "Get color from I2C Grove Color Sensor v1.3 or v2.0\noutput value : [0;65534]",
+  "CODO.measureDistanceCentimeter": "get distance from ultrasonic range sensor",
+  "CODO.motorDir": "Change the motor direction",
+  "CODO.motorDir|param|dir": "rotation direction (forward, backward)",
+  "CODO.motorDir|param|motor": "selection (left, right)",
+  "CODO.motorSpeed": "Change the motor speed",
+  "CODO.motorSpeed|param|motor": "selection (left, right)",
+  "CODO.robotMove": "Control Robot speed [0-100%]",
+  "CODO.robotMove|param|dir": "direction",
+  "CODO.robotMove|param|speed": "speed in %",
+  "CODO.setServoMotor": "Set the servomotor position",
+  "CODO.setServoMotor|param|pin": "servomotor pin (right or left)"
+}
