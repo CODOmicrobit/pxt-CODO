@@ -2,10 +2,40 @@
  * Library for Grove micro:bit project board https://www.a4.fr/carte-de-prototypage-microbit-codo.html
  */
 
-
-//% weight=1 color=#004696 icon="\uf121" block="CODO" advanced=false
+//% weight=150 color=#004696 icon="\uf121" block="CODO" advanced=false
 //% groups=['Motors', 'Sensors', 'Actuators', 'Display', 'Communication']
 namespace CODO {
+    const initRegisterArray: number[] = [
+        0xEF, 0x00, 0x32, 0x29, 0x33, 0x01, 0x34, 0x00, 0x35, 0x01, 0x36, 0x00, 0x37, 0x07, 0x38, 0x17,
+        0x39, 0x06, 0x3A, 0x12, 0x3F, 0x00, 0x40, 0x02, 0x41, 0xFF, 0x42, 0x01, 0x46, 0x2D, 0x47, 0x0F,
+        0x48, 0x3C, 0x49, 0x00, 0x4A, 0x1E, 0x4B, 0x00, 0x4C, 0x20, 0x4D, 0x00, 0x4E, 0x1A, 0x4F, 0x14,
+        0x50, 0x00, 0x51, 0x10, 0x52, 0x00, 0x5C, 0x02, 0x5D, 0x00, 0x5E, 0x10, 0x5F, 0x3F, 0x60, 0x27,
+        0x61, 0x28, 0x62, 0x00, 0x63, 0x03, 0x64, 0xF7, 0x65, 0x03, 0x66, 0xD9, 0x67, 0x03, 0x68, 0x01,
+        0x69, 0xC8, 0x6A, 0x40, 0x6D, 0x04, 0x6E, 0x00, 0x6F, 0x00, 0x70, 0x80, 0x71, 0x00, 0x72, 0x00,
+        0x73, 0x00, 0x74, 0xF0, 0x75, 0x00, 0x80, 0x42, 0x81, 0x44, 0x82, 0x04, 0x83, 0x20, 0x84, 0x20,
+        0x85, 0x00, 0x86, 0x10, 0x87, 0x00, 0x88, 0x05, 0x89, 0x18, 0x8A, 0x10, 0x8B, 0x01, 0x8C, 0x37,
+        0x8D, 0x00, 0x8E, 0xF0, 0x8F, 0x81, 0x90, 0x06, 0x91, 0x06, 0x92, 0x1E, 0x93, 0x0D, 0x94, 0x0A,
+        0x95, 0x0A, 0x96, 0x0C, 0x97, 0x05, 0x98, 0x0A, 0x99, 0x41, 0x9A, 0x14, 0x9B, 0x0A, 0x9C, 0x3F,
+        0x9D, 0x33, 0x9E, 0xAE, 0x9F, 0xF9, 0xA0, 0x48, 0xA1, 0x13, 0xA2, 0x10, 0xA3, 0x08, 0xA4, 0x30,
+        0xA5, 0x19, 0xA6, 0x10, 0xA7, 0x08, 0xA8, 0x24, 0xA9, 0x04, 0xAA, 0x1E, 0xAB, 0x1E, 0xCC, 0x19,
+        0xCD, 0x0B, 0xCE, 0x13, 0xCF, 0x64, 0xD0, 0x21, 0xD1, 0x0F, 0xD2, 0x88, 0xE0, 0x01, 0xE1, 0x04,
+        0xE2, 0x41, 0xE3, 0xD6, 0xE4, 0x00, 0xE5, 0x0C, 0xE6, 0x0A, 0xE7, 0x00, 0xE8, 0x00, 0xE9, 0x00,
+        0xEE, 0x07, 0xEF, 0x01, 0x00, 0x1E, 0x01, 0x1E, 0x02, 0x0F, 0x03, 0x10, 0x04, 0x02, 0x05, 0x00,
+        0x06, 0xB0, 0x07, 0x04, 0x08, 0x0D, 0x09, 0x0E, 0x0A, 0x9C, 0x0B, 0x04, 0x0C, 0x05, 0x0D, 0x0F,
+        0x0E, 0x02, 0x0F, 0x12, 0x10, 0x02, 0x11, 0x02, 0x12, 0x00, 0x13, 0x01, 0x14, 0x05, 0x15, 0x07,
+        0x16, 0x05, 0x17, 0x07, 0x18, 0x01, 0x19, 0x04, 0x1A, 0x05, 0x1B, 0x0C, 0x1C, 0x2A, 0x1D, 0x01,
+        0x1E, 0x00, 0x21, 0x00, 0x22, 0x00, 0x23, 0x00, 0x25, 0x01, 0x26, 0x00, 0x27, 0x39, 0x28, 0x7F,
+        0x29, 0x08, 0x30, 0x03, 0x31, 0x00, 0x32, 0x1A, 0x33, 0x1A, 0x34, 0x07, 0x35, 0x07, 0x36, 0x01,
+        0x37, 0xFF, 0x38, 0x36, 0x39, 0x07, 0x3A, 0x00, 0x3E, 0xFF, 0x3F, 0x00, 0x40, 0x77, 0x41, 0x40,
+        0x42, 0x00, 0x43, 0x30, 0x44, 0xA0, 0x45, 0x5C, 0x46, 0x00, 0x47, 0x00, 0x48, 0x58, 0x4A, 0x1E,
+        0x4B, 0x1E, 0x4C, 0x00, 0x4D, 0x00, 0x4E, 0xA0, 0x4F, 0x80, 0x50, 0x00, 0x51, 0x00, 0x52, 0x00,
+        0x53, 0x00, 0x54, 0x00, 0x57, 0x80, 0x59, 0x10, 0x5A, 0x08, 0x5B, 0x94, 0x5C, 0xE8, 0x5D, 0x08,
+        0x5E, 0x3D, 0x5F, 0x99, 0x60, 0x45, 0x61, 0x40, 0x63, 0x2D, 0x64, 0x02, 0x65, 0x96, 0x66, 0x00,
+        0x67, 0x97, 0x68, 0x01, 0x69, 0xCD, 0x6A, 0x01, 0x6B, 0xB0, 0x6C, 0x04, 0x6D, 0x2C, 0x6E, 0x01,
+        0x6F, 0x32, 0x71, 0x00, 0x72, 0x01, 0x73, 0x35, 0x74, 0x00, 0x75, 0x33, 0x76, 0x31, 0x77, 0x01,
+        0x7C, 0x84, 0x7D, 0x03, 0x7E, 0x01
+    ];
+
     export enum MotorDirection {
         //% block="Forward"
         Forward = 1,
@@ -13,6 +43,13 @@ namespace CODO {
         Reverse = 2,
         //% block="Stop"
         Stop = 0
+    }
+
+    export enum OnOff {
+        //% block="On"
+        On = 1,
+        //% block="Off"
+        Off = 0
     }
 
     export enum RobotDirection {
@@ -43,7 +80,7 @@ namespace CODO {
         //% block="left and right motor"
         MotorFull
     }
-    
+
     export enum Color {
         //% block="Red"
         Red,
@@ -55,23 +92,58 @@ namespace CODO {
         Clear
     }
 
+    export enum GroveGesture {
+        //% block=None
+        None = 0,
+        //% block=Right
+        Right = 1,
+        //% block=Left
+        Left = 2,
+        //% block=Up
+        Up = 3,
+        //% block=Down
+        Down = 4,
+        //% block=Forward
+        Forward = 5,
+        //% block=Backward
+        Backward = 6,
+        //% block=Clockwise
+        Clockwise = 7,
+        //% block=Anticlockwise
+        Anticlockwise = 8,
+        //% block=Wave
+        Wave = 9
+    }
+
     export let _speed_left = 700; //1023 = 100% speed
     export let _speed_right = 700;
     export let _dir_right = 1; //0 = stop, 1 = forward, 2 = backward
     export let _dir_left = 1;
     export let identifiant = 0;
-    
+    export let grovegestureinit = 0;
+
+    let TubeTab: number[] = [
+        0x3f, 0x06, 0x5b, 0x4f, 0x66, 0x6d, 0x7d, 0x07,
+        0x7f, 0x6f, 0x77, 0x7c, 0x39, 0x5e, 0x79, 0x71
+    ];
+
+    export let clkPin: DigitalPin;
+    export let dataPin: DigitalPin;
+    export let brightnessLevel: number;
+    export let pointFlag: boolean;
+    export let buf: Buffer;
+
     /**
      * Control Robot speed [0-100%]
      * @param dir direction
      * @param speed speed in %
      */
     //% blockId=RobotDriverRobotMove
-    //% block="CODO %dir| speed %speed"
+    //% block="move %dir| speed %speed"
     //% speed.min=0 speed.max=100
     //% parts="RobotDriver" advanced=false
     //% speed.defl=75
-    //% group="Motion"
+    //% group="Motors"
     export function robotMove(dir: RobotDirection, speed: number): void {
         setSpeed(Motors.MotorFull, speed);
         switch (dir) {
@@ -106,11 +178,52 @@ namespace CODO {
 
 
     /**
-     * get distance from ultrasonic range sensor
+     * Change the motor direction
+     * @param motor selection (left, right)
+     * @param dir rotation direction (forward, backward)
+     */
+    //% blockId=RobotDrivermotordir
+    //% block="set %motor| %dir"
+    //% parts="RobotDriver" advanced=false
+    //% motor.defl=MotorFull
+    //% group="Motors"
+    export function motorDir(motor: Motors, dir: MotorDirection): void {
+        setDir(motor, dir);
+        setMotors();
+    }
+
+    /**
+     * Change the motor speed [0-100%]
+     * @param motor selection (left, right)
+     * @param new speed (0-100%)
+     */
+
+    //% blockId=robotdrivermotorspeed
+    //% block="set %motor| to %speed %"
+    //% speed.min=0 speed.max=100
+    //% parts="A4_Robot_Driver" advanced=false
+    //% speed.defl=75
+    //% group="Motors"
+    export function motorSpeed(motor: Motors, speed: number): void {
+        setSpeed(motor, speed);
+        setMotors();
+    }
+
+    /**
+     * Stop both motors
+    */
+    //% blockId=RobotDriverRobotStop
+    //% block="stop both motors"
+    //% group="Motors"
+    export function motorStop(): void {
+        setDir(Motors.MotorFull, MotorDirection.Stop);
+    }
+    /**
+     * get distance from ultrasonic range sensor [cm]
      * @param pin Input pin
      */
     //% blockId=RobotDriverultrasonic_cm 
-    //% block="ultrasonic - Measure distance|%name| (cm)"
+    //% block="ultrasonic distance|%name| (cm)"
     //% name.fieldEditor="gridpicker" 
     //% name.fieldOptions.columns=5
     //% name.fieldOptions.tooltips="false"
@@ -131,59 +244,66 @@ namespace CODO {
     }
 
     /**
-     * Set the servomotor position
+     * Get analog potentiometer value [0-1023]
+    */
+    //% blockId=CodoPotargRead
+    //% block="potentiometer |%pin|"
+    //% group="Sensors"
+    export function potarValue(pin: AnalogPin): number {
+        return pins.analogReadPin(pin);
+    }
+
+    /**
+     * Get collision sensor state [0-1]
+    */
+    //% blockId=CodoCollisionRead
+    //% block="collision sensor |%pin|"
+    //% group="Sensors"
+    export function collisionSensor(pin: DigitalPin): number {
+        return pins.digitalReadPin(pin);
+    }
+
+    /**
+     * Get line sensor state [0-1]
+    */
+    //% blockId=CodoLineRead
+    //% block="line sensor |%pin|"
+    //% group="Sensors"
+    export function detectline(pin: DigitalPin): number {
+        return pins.digitalReadPin(pin);
+    }
+
+    /**
+     * Get button state [0-1]
+    */
+    //% blockId=CodoButtonRead
+    //% block="button |%pin|"
+    //% group="Sensors"
+    export function buttonState(pin: DigitalPin): number {
+        return pins.digitalReadPin(pin);
+    }
+
+    /**
+     * Set the servomotor position [0-180deg]
      * @param pin servomotor pin (right or left)
      */
     //% blockId=RobotDriverservodegrees
-    //% block="set the servomotor |%pin| at |%angle| degree"
+    //% block="servomotor |%pin| to |%angle| degree"
     //% parts="RobotDriver" advanced=false
     //% angle.shadow="protractorPicker"
     //% angle.defl=90
-    //% group="Actuators"
+    //% group="Actuator"
     export function setServoMotor(pin: AnalogPin, angle: number): void {
         pins.servoWritePin(pin, Math.constrain(angle, 0, 180));
     }
 
     /**
-     * Change the motor direction
-     * @param motor selection (left, right)
-     * @param dir rotation direction (forward, backward)
-     */
-
-    //% blockId=RobotDrivermotordir
-    //% block="set %motor| %dir"
-    //% parts="RobotDriver" advanced=true
-    //% motor.defl=MotorFull
-    //% group="Motion"
-    export function motorDir(motor: Motors, dir: MotorDirection): void {
-        setDir(motor, dir);
-        setMotors();
-    }
-
-    /**
-     * Change the motor speed
-     * @param motor selection (left, right)
-     * @param new speed (0-100%)
-     */
-    
-    //% blockId=robotdrivermotorspeed
-    //% block="set speed %motor| to %speed %"
-    //% speed.min=0 speed.max=100
-    //% parts="A4_Robot_Driver" advanced=true
-    //% speed.defl=75
-    //% group="Motion"
-    export function motorSpeed(motor: Motors, speed: number): void {
-        setSpeed(motor, speed);
-        setMotors();
-    }
-
-     /**
-     * Get color from I2C Grove Color Sensor v1.3 or v2.0
-     * output value : [0;65534]
-     * @param selected color
-     */
+    * Get color from I2C Grove Color Sensor v1.3 or v2.0
+    * [0;65534]
+    * @param selected color
+    */
     //% blockId="grovecolorsensorgetcolor" 
-    //% block="color - %Color value"
+    //% block="color %Color"
     //% group="Sensors"
     //% block.loc.fr="Valeur de la couleur %Color du capteur de couleur grove"
     //% jsdoc = "Grab sensor value from grove color sensor"
@@ -272,7 +392,228 @@ namespace CODO {
         }
         return 0;
     }
-   
+
+    /**
+     * Detect and recognize the gestures from Grove - Gesture
+     * None:0
+     * Right:1
+     * Left:2
+     * Up:3
+     * Down:4
+     * Forward:5
+     * Backward:6
+     * Clockwise:7
+     * Anticlockwise:8
+     * Wave:9
+     */
+    //% blockId=CodoGroveGesture
+    //% block="grove gesture"
+    //% group="Sensors"
+    export function grove_gesture_reads(): number {
+        let data = 0, result = 0;
+
+        if(grovegestureinit == 0){
+            paj7620Init();
+            basic.pause(200);
+            grovegestureinit = 1;
+        }
+
+        data = paj7620ReadReg(0x43);
+        switch (data) {
+            case 0x01:
+                result = GroveGesture.Right;
+                break;
+
+            case 0x02:
+                result = GroveGesture.Left;
+                break;
+
+            case 0x04:
+                result = GroveGesture.Up;
+                break;
+
+            case 0x08:
+                result = GroveGesture.Down;
+                break;
+
+            case 0x10:
+                result = GroveGesture.Forward;
+                break;
+
+            case 0x20:
+                result = GroveGesture.Backward;
+                break;
+
+            case 0x40:
+                result = GroveGesture.Clockwise;
+                break;
+
+            case 0x80:
+                result = GroveGesture.Anticlockwise;
+                break;
+
+            default:
+                data = paj7620ReadReg(0x44);
+                if (data == 0x01)
+                    result = GroveGesture.Wave;
+                break;
+        }
+        return result;
+    }
+
+    /**
+     * Set Led state
+    */
+    //% blockId=CodoLedSet
+    //% block="led |%pin| to |%state|"
+    //% state.min=0 state.max=1
+    //% group="Display"
+    export function ledState(pin: DigitalPin, state: OnOff): void {
+        pins.digitalWritePin(pin, state);
+    }
+
+    /**
+    * Show a 4 digits number on display
+    * @param dispData value of number
+    */
+    //% blockId=grove_tm1637_display_number block="%strip|show number|%dispData"
+    //% group="Display"
+    export function show(dispData: number) {
+        let compare_01: number = dispData % 100;
+        let compare_001: number = dispData % 1000;
+
+        if (dispData < 10) {
+            bit(dispData, 3);
+            bit(0x7f, 2);
+            bit(0x7f, 1);
+            bit(0x7f, 0);
+        }
+        else if (dispData < 100) {
+            bit(dispData % 10, 3);
+            if (dispData > 90) {
+                bit(9, 2);
+            } else {
+                bit(Math.floor(dispData / 10) % 10, 2);
+            }
+
+            bit(0x7f, 1);
+            bit(0x7f, 0);
+        }
+        else if (dispData < 1000) {
+            bit(dispData % 10, 3);
+            if (compare_01 > 90) {
+                bit(9, 2);
+            } else {
+                bit(Math.floor(dispData / 10) % 10, 2);
+            }
+            if (compare_001 > 900) {
+                bit(9, 1);
+            } else {
+                bit(Math.floor(dispData / 100) % 10, 1);
+            }
+            bit(0x7f, 0);
+        }
+        else if (dispData < 10000) {
+            bit(dispData % 10, 3);
+            if (compare_01 > 90) {
+                bit(9, 2);
+            } else {
+                bit(Math.floor(dispData / 10) % 10, 2);
+            }
+            if (compare_001 > 900) {
+                bit(9, 1);
+            } else {
+                bit(Math.floor(dispData / 100) % 10, 1);
+            }
+            if (dispData > 9000) {
+                bit(9, 0);
+            } else {
+                bit(Math.floor(dispData / 1000) % 10, 0);
+            }
+        }
+        else {
+            bit(9, 3);
+            bit(9, 2);
+            bit(9, 1);
+            bit(9, 0);
+        }
+    }
+
+    /**
+     * Set the brightness level of display at from 0 to 7
+     * @param level value of brightness light level
+     */
+    //% blockId=grove_tm1637_set_display_level block="%strip|brightness level to|%level"
+    //% level.min=0 level.max=7
+    //% group="Display"
+    export function set(level: number) {
+        brightnessLevel = level;
+
+        bit(buf[0], 0x00);
+        bit(buf[1], 0x01);
+        bit(buf[2], 0x02);
+        bit(buf[3], 0x03);
+    }
+
+    /**
+     * Show a single number from 0 to 9 at a specified digit of Grove - 4-Digit Display
+     * @param dispData value of number
+     * @param bitAddr value of bit number
+     */
+    //% blockId=grove_tm1637_display_bit block="%strip|show single number|%dispData|at digit|%bitAddr"
+    //% dispData.min=0 dispData.max=9
+    //% bitAddr.min=0 bitAddr.max=3
+    //% group="Display"
+    //% advanced=true
+    export function bit(dispData: number, bitAddr: number) {
+        if ((dispData == 0x7f) || ((dispData <= 9) && (bitAddr <= 3))) {
+            let segData = 0;
+
+            segData = coding(dispData);
+            start();
+            writeByte(0x44);
+            stop();
+            start();
+            writeByte(bitAddr | 0xc0);
+            writeByte(segData);
+            stop();
+            start();
+            writeByte(0x88 + brightnessLevel);
+            stop();
+
+            buf[bitAddr] = dispData;
+        }
+    }
+
+    /**
+     * Turn on or off the colon point on Grove - 4-Digit Display
+     * @param pointEn value of point switch
+     */
+    //% blockId=grove_tm1637_display_point block="%strip|turn|%point|colon point"
+    //% group="Display"
+    //% advanced=true
+    export function point(point: boolean) {
+        pointFlag = point;
+
+        bit(buf[0], 0x00);
+        bit(buf[1], 0x01);
+        bit(buf[2], 0x02);
+        bit(buf[3], 0x03);
+    }
+
+    /**
+     * Clear the display
+     */
+    //% blockId=grove_tm1637_display_clear block="%strip|clear"
+    //% group="Display"
+    //% advanced=true
+    export function clear() {
+        bit(0x7f, 0x00);
+        bit(0x7f, 0x01);
+        bit(0x7f, 0x02);
+        bit(0x7f, 0x03);
+    }
+
     /*
      * Private functions
      */
@@ -333,5 +674,86 @@ namespace CODO {
             pins.digitalWritePin(DigitalPin.P13, 0);
             pins.digitalWritePin(DigitalPin.P14, 0);
         }
+    }
+
+    function writeByte(wrData: number) {
+        for (let i = 0; i < 8; i++) {
+            pins.digitalWritePin(clkPin, 0);
+            if (wrData & 0x01) pins.digitalWritePin(dataPin, 1);
+            else pins.digitalWritePin(dataPin, 0);
+            wrData >>= 1;
+            pins.digitalWritePin(clkPin, 1);
+        }
+
+        pins.digitalWritePin(clkPin, 0); // Wait for ACK
+        pins.digitalWritePin(dataPin, 1);
+        pins.digitalWritePin(clkPin, 1);
+    }
+
+    function start() {
+        pins.digitalWritePin(clkPin, 1);
+        pins.digitalWritePin(dataPin, 1);
+        pins.digitalWritePin(dataPin, 0);
+        pins.digitalWritePin(clkPin, 0);
+    }
+
+    function stop() {
+        pins.digitalWritePin(clkPin, 0);
+        pins.digitalWritePin(dataPin, 0);
+        pins.digitalWritePin(clkPin, 1);
+        pins.digitalWritePin(dataPin, 1);
+    }
+
+    function coding(dispData: number): number {
+        let pointData = 0;
+
+        if (pointFlag == true) pointData = 0x80;
+        else if (pointFlag == false) pointData = 0;
+
+        if (dispData == 0x7f) dispData = 0x00 + pointData;
+        else dispData = TubeTab[dispData] + pointData;
+
+        return dispData;
+    }
+
+    function paj7620WriteReg(addr: number, cmd: number) {
+        let buf: Buffer = pins.createBuffer(2);
+
+        buf[0] = addr;
+        buf[1] = cmd;
+
+        pins.i2cWriteBuffer(0x73, buf, false);
+    }
+
+    function paj7620ReadReg(addr: number): number {
+        let buf: Buffer = pins.createBuffer(1);
+
+        buf[0] = addr;
+
+        pins.i2cWriteBuffer(0x73, buf, false);
+
+        buf = pins.i2cReadBuffer(0x73, 1, false);
+
+        return buf[0];
+    }
+
+    function paj7620SelectBank(bank: number) {
+        if (bank == 0) paj7620WriteReg(0xEF, 0);
+        else if (bank == 1) paj7620WriteReg(0xEF, 1);
+    }
+
+    function paj7620Init() {
+        let temp = 0;
+
+        paj7620SelectBank(0);
+
+        temp = paj7620ReadReg(0);
+        if (temp == 0x20) {
+            for (let i = 0; i < 438; i += 2) {
+                paj7620WriteReg(initRegisterArray[i], initRegisterArray[i + 1]);
+            }
+        }
+
+        paj7620SelectBank(0);
     }
 }
