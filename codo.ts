@@ -2,7 +2,7 @@
  * Library for Grove micro:bit project board https://www.a4.fr/carte-de-prototypage-microbit-codo.html
  */
 
-//% weight=150 color=#004696 icon="\uf121" block="CODO" advanced=false
+//% weight=10 color=#004696 icon="\uf121" block="CODO" advanced=false
 //% groups=['Motors', 'Sensors', 'Actuators', 'Display', 'Communication']
 namespace CODO {
     const initRegisterArray: number[] = [
@@ -409,6 +409,7 @@ namespace CODO {
      */
     //% blockId=CODO_tm1637_create block="4-Digit Display at|%clkPin|and|%dataPin"
     //% group="Display"
+    //% weight=60
     export function digit_createDisplay(clkPin: DigitalPin, dataPin: DigitalPin): void {
         digit_buf = pins.createBuffer(4);
         digit_clkPin = clkPin;
@@ -503,6 +504,7 @@ namespace CODO {
     */
     //% blockId=CODO_tm1637_display_number block="show number|%dispData"
     //% group="Display"
+    //% weight=59
     export function digit_show(dispData: number) {
         let compare_01: number = dispData % 100;
         let compare_001: number = dispData % 1000;
@@ -571,6 +573,7 @@ namespace CODO {
     //% blockId=CODO_tm1637_set_display_level block="brightness level to|%level"
     //% level.min=0 level.max=7
     //% group="Display"
+    //% weight=58
     export function digit_set(level: number) {
         digit_brightnessLevel = level;
 
