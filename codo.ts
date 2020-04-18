@@ -52,6 +52,13 @@ namespace CODO {
         Off = 0
     }
 
+    export enum BP {
+        //% block="BPA"
+        BPA = 1,
+        //% block="BPB"
+        BPB = 0
+    }
+
     export enum RobotDirection {
         //% block="Forward"
         Forward,
@@ -127,11 +134,11 @@ namespace CODO {
         0x7f, 0x6f, 0x77, 0x7c, 0x39, 0x5e, 0x79, 0x71
     ];
 
-    export let clkPin: DigitalPin;
-    export let dataPin: DigitalPin;
-    export let brightnessLevel: number;
-    export let pointFlag: boolean;
-    export let buf: Buffer;
+    export let digit_clkPin: DigitalPin;
+    export let digit_dataPin: DigitalPin;
+    export let digit_brightnessLevel: number;
+    export let digit_pointFlag: boolean;
+    export let digit_buf: Buffer;
 
     /**
      * Control Robot speed [0-100%]
@@ -216,7 +223,7 @@ namespace CODO {
     //% block="stop both motors"
     //% group="Motors"
     export function motorStop(): void {
-        setDir(Motors.MotorFull, MotorDirection.Stop);
+        robotMove(CODO.RobotDirection.Stop, 0)
     }
     /**
      * get distance from ultrasonic range sensor [cm]
@@ -259,8 +266,10 @@ namespace CODO {
     //% blockId=CodoCollisionRead
     //% block="collision sensor |%pin|"
     //% group="Sensors"
-    export function collisionSensor(pin: DigitalPin): number {
-        return pins.digitalReadPin(pin);
+    export function collisionSensor(pin: BP): boolean {
+        if (pin)
+            return input.buttonIsPressed(Button.A);
+        return input.buttonIsPressed(Button.B);
     }
 
     /**
@@ -394,6 +403,21 @@ namespace CODO {
     }
 
     /**
+     * Create a new driver Grove - 4-Digit Display
+     * @param clkPin value of clk pin number
+     * @param dataPin value of data pin number
+     */
+    //% blockId=CODO_tm1637_create block="4-Digit Display at|%clkPin|and|%dataPin"
+    export function digit_createDisplay(clkPin: DigitalPin, dataPin: DigitalPin): void {
+        digit_buf = pins.createBuffer(4);
+        digit_clkPin = clkPin;
+        digit_dataPin = dataPin;
+        digit_brightnessLevel = 0;
+        digit_pointFlag = false;
+        digit_clear();
+    }
+
+    /**
      * Detect and recognize the gestures from Grove - Gesture
      * None:0
      * Right:1
@@ -412,7 +436,7 @@ namespace CODO {
     export function grove_gesture_reads(): number {
         let data = 0, result = 0;
 
-        if(grovegestureinit == 0){
+        if (grovegestureinit == 0) {
             paj7620Init();
             basic.pause(200);
             grovegestureinit = 1;
@@ -476,66 +500,66 @@ namespace CODO {
     * Show a 4 digits number on display
     * @param dispData value of number
     */
-    //% blockId=grove_tm1637_display_number block="%strip|show number|%dispData"
+    //% blockId=CODO_tm1637_display_number block="show number|%dispData"
     //% group="Display"
-    export function show(dispData: number) {
+    export function digit_show(dispData: number) {
         let compare_01: number = dispData % 100;
         let compare_001: number = dispData % 1000;
 
         if (dispData < 10) {
-            bit(dispData, 3);
-            bit(0x7f, 2);
-            bit(0x7f, 1);
-            bit(0x7f, 0);
+            digit_bit(dispData, 3);
+            digit_bit(0x7f, 2);
+            digit_bit(0x7f, 1);
+            digit_bit(0x7f, 0);
         }
         else if (dispData < 100) {
-            bit(dispData % 10, 3);
+            digit_bit(dispData % 10, 3);
             if (dispData > 90) {
-                bit(9, 2);
+                digit_bit(9, 2);
             } else {
-                bit(Math.floor(dispData / 10) % 10, 2);
+                digit_bit(Math.floor(dispData / 10) % 10, 2);
             }
 
-            bit(0x7f, 1);
-            bit(0x7f, 0);
+            digit_bit(0x7f, 1);
+            digit_bit(0x7f, 0);
         }
         else if (dispData < 1000) {
-            bit(dispData % 10, 3);
+            digit_bit(dispData % 10, 3);
             if (compare_01 > 90) {
-                bit(9, 2);
+                digit_bit(9, 2);
             } else {
-                bit(Math.floor(dispData / 10) % 10, 2);
+                digit_bit(Math.floor(dispData / 10) % 10, 2);
             }
             if (compare_001 > 900) {
-                bit(9, 1);
+                digit_bit(9, 1);
             } else {
-                bit(Math.floor(dispData / 100) % 10, 1);
+                digit_bit(Math.floor(dispData / 100) % 10, 1);
             }
-            bit(0x7f, 0);
+            digit_bit(0x7f, 0);
         }
         else if (dispData < 10000) {
-            bit(dispData % 10, 3);
+            digit_bit(dispData % 10, 3);
             if (compare_01 > 90) {
-                bit(9, 2);
+                digit_bit(9, 2);
             } else {
-                bit(Math.floor(dispData / 10) % 10, 2);
+                digit_bit(Math.floor(dispData / 10) % 10, 2);
             }
             if (compare_001 > 900) {
-                bit(9, 1);
+                digit_bit(9, 1);
             } else {
-                bit(Math.floor(dispData / 100) % 10, 1);
+                digit_bit(Math.floor(dispData / 100) % 10, 1);
             }
             if (dispData > 9000) {
-                bit(9, 0);
+                digit_bit(9, 0);
             } else {
-                bit(Math.floor(dispData / 1000) % 10, 0);
+                digit_bit(Math.floor(dispData / 1000) % 10, 0);
             }
         }
         else {
-            bit(9, 3);
-            bit(9, 2);
-            bit(9, 1);
-            bit(9, 0);
+            digit_bit(9, 3);
+            digit_bit(9, 2);
+            digit_bit(9, 1);
+            digit_bit(9, 0);
         }
     }
 
@@ -543,16 +567,16 @@ namespace CODO {
      * Set the brightness level of display at from 0 to 7
      * @param level value of brightness light level
      */
-    //% blockId=grove_tm1637_set_display_level block="%strip|brightness level to|%level"
+    //% blockId=CODO_tm1637_set_display_level block="brightness level to|%level"
     //% level.min=0 level.max=7
     //% group="Display"
-    export function set(level: number) {
-        brightnessLevel = level;
+    export function digit_set(level: number) {
+        digit_brightnessLevel = level;
 
-        bit(buf[0], 0x00);
-        bit(buf[1], 0x01);
-        bit(buf[2], 0x02);
-        bit(buf[3], 0x03);
+        digit_bit(digit_buf[0], 0x00);
+        digit_bit(digit_buf[1], 0x01);
+        digit_bit(digit_buf[2], 0x02);
+        digit_bit(digit_buf[3], 0x03);
     }
 
     /**
@@ -565,23 +589,23 @@ namespace CODO {
     //% bitAddr.min=0 bitAddr.max=3
     //% group="Display"
     //% advanced=true
-    export function bit(dispData: number, bitAddr: number) {
+    export function digit_bit(dispData: number, bitAddr: number) {
         if ((dispData == 0x7f) || ((dispData <= 9) && (bitAddr <= 3))) {
             let segData = 0;
 
-            segData = coding(dispData);
-            start();
-            writeByte(0x44);
-            stop();
-            start();
-            writeByte(bitAddr | 0xc0);
-            writeByte(segData);
-            stop();
-            start();
-            writeByte(0x88 + brightnessLevel);
-            stop();
+            segData = digit_coding(dispData);
+            digit_start();
+            digit_writeByte(0x44);
+            digit_stop();
+            digit_start();
+            digit_writeByte(bitAddr | 0xc0);
+            digit_writeByte(segData);
+            digit_stop();
+            digit_start();
+            digit_writeByte(0x88 + digit_brightnessLevel);
+            digit_stop();
 
-            buf[bitAddr] = dispData;
+            digit_buf[bitAddr] = dispData;
         }
     }
 
@@ -592,13 +616,13 @@ namespace CODO {
     //% blockId=grove_tm1637_display_point block="%strip|turn|%point|colon point"
     //% group="Display"
     //% advanced=true
-    export function point(point: boolean) {
-        pointFlag = point;
+    export function digit_point(point: boolean) {
+        digit_pointFlag = point;
 
-        bit(buf[0], 0x00);
-        bit(buf[1], 0x01);
-        bit(buf[2], 0x02);
-        bit(buf[3], 0x03);
+        digit_bit(digit_buf[0], 0x00);
+        digit_bit(digit_buf[1], 0x01);
+        digit_bit(digit_buf[2], 0x02);
+        digit_bit(digit_buf[3], 0x03);
     }
 
     /**
@@ -607,11 +631,11 @@ namespace CODO {
     //% blockId=grove_tm1637_display_clear block="%strip|clear"
     //% group="Display"
     //% advanced=true
-    export function clear() {
-        bit(0x7f, 0x00);
-        bit(0x7f, 0x01);
-        bit(0x7f, 0x02);
-        bit(0x7f, 0x03);
+    export function digit_clear() {
+        digit_bit(0x7f, 0x00);
+        digit_bit(0x7f, 0x01);
+        digit_bit(0x7f, 0x02);
+        digit_bit(0x7f, 0x03);
     }
 
     /*
@@ -676,39 +700,39 @@ namespace CODO {
         }
     }
 
-    function writeByte(wrData: number) {
+    function digit_writeByte(wrData: number) {
         for (let i = 0; i < 8; i++) {
-            pins.digitalWritePin(clkPin, 0);
-            if (wrData & 0x01) pins.digitalWritePin(dataPin, 1);
-            else pins.digitalWritePin(dataPin, 0);
+            pins.digitalWritePin(digit_clkPin, 0);
+            if (wrData & 0x01) pins.digitalWritePin(digit_dataPin, 1);
+            else pins.digitalWritePin(digit_dataPin, 0);
             wrData >>= 1;
-            pins.digitalWritePin(clkPin, 1);
+            pins.digitalWritePin(digit_clkPin, 1);
         }
 
-        pins.digitalWritePin(clkPin, 0); // Wait for ACK
-        pins.digitalWritePin(dataPin, 1);
-        pins.digitalWritePin(clkPin, 1);
+        pins.digitalWritePin(digit_clkPin, 0); // Wait for ACK
+        pins.digitalWritePin(digit_dataPin, 1);
+        pins.digitalWritePin(digit_clkPin, 1);
     }
 
-    function start() {
-        pins.digitalWritePin(clkPin, 1);
-        pins.digitalWritePin(dataPin, 1);
-        pins.digitalWritePin(dataPin, 0);
-        pins.digitalWritePin(clkPin, 0);
+    function digit_start() {
+        pins.digitalWritePin(digit_clkPin, 1);
+        pins.digitalWritePin(digit_dataPin, 1);
+        pins.digitalWritePin(digit_dataPin, 0);
+        pins.digitalWritePin(digit_clkPin, 0);
     }
 
-    function stop() {
-        pins.digitalWritePin(clkPin, 0);
-        pins.digitalWritePin(dataPin, 0);
-        pins.digitalWritePin(clkPin, 1);
-        pins.digitalWritePin(dataPin, 1);
+    function digit_stop() {
+        pins.digitalWritePin(digit_clkPin, 0);
+        pins.digitalWritePin(digit_dataPin, 0);
+        pins.digitalWritePin(digit_clkPin, 1);
+        pins.digitalWritePin(digit_dataPin, 1);
     }
 
-    function coding(dispData: number): number {
+    function digit_coding(dispData: number): number {
         let pointData = 0;
 
-        if (pointFlag == true) pointData = 0x80;
-        else if (pointFlag == false) pointData = 0;
+        if (digit_pointFlag == true) pointData = 0x80;
+        else if (digit_pointFlag == false) pointData = 0;
 
         if (dispData == 0x7f) dispData = 0x00 + pointData;
         else dispData = TubeTab[dispData] + pointData;
