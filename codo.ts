@@ -408,6 +408,7 @@ namespace CODO {
      * @param dataPin value of data pin number
      */
     //% blockId=CODO_tm1637_create block="4-Digit Display at|%clkPin|and|%dataPin"
+    //% group="Display"
     export function digit_createDisplay(clkPin: DigitalPin, dataPin: DigitalPin): void {
         digit_buf = pins.createBuffer(4);
         digit_clkPin = clkPin;
