@@ -89,7 +89,7 @@ Detect and recognize the gestures from Grove - Gesture
 * Clockwise:7
 * Anticlockwise:8
 * Wave:9
-(from https://github.com/Seeed-Studio/pxt-grove)
+<br/>(from https://github.com/Seeed-Studio/pxt-grove)
 
 - **function collisionSensor(pin: BP)**
 
@@ -107,22 +107,22 @@ Return button state [0-1].
 
 - **function digit_createDisplay(clkPin: DigitalPin, dataPin: DigitalPin)**
 
-Create a new driver Grove - 4-Digit Display.
+Create a new driver Grove - 4-Digit Display.<br/>
 (from https://github.com/Seeed-Studio/pxt-grove)
 
 - **function digit_show(dispData: number)**
 
-Show a 4 digits number on 4-Digit Display
+Show a 4 digits number on 4-Digit Display<br/>
 (from https://github.com/Seeed-Studio/pxt-grove)
 
 - **function digit_set(level: number)**
 
-Set the brightness level of 4-Digit Display at from 0 to 7
+Set the brightness level of 4-Digit Display at from 0 to 7<br/>
 (from https://github.com/Seeed-Studio/pxt-grove)
 
 - **function digit_clear()**
 
-Clear the 4-Digit Display
+Clear the 4-Digit Display<br/>
 (from https://github.com/Seeed-Studio/pxt-grove)
 
 - **function ledState(pin: DigitalPin, state: OnOff)**
