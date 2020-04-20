@@ -20,7 +20,7 @@ Robot go forward until the first wall
 
 ### Send color value to serial line
 
-![](example/robotwall.png)robotcolor
+![](example/robotcolor.png)robotcolor
 
 ## Basic usage :
 
