@@ -4,7 +4,7 @@ https://www.a4.fr/carte-de-prototypage-microbit-codo.html
 
 ![](icon.png)  
 
-## Examples :
+## Examples with Blocks :
 
 ### Robot Control by hand
 
@@ -22,7 +22,7 @@ Robot go forward until the first wall
 
 ![](example/robotcolor.png)robotcolor
 
-## Basic usage :
+## Examples with JavaScript :
 
 ### Robot forward at 75%
 
