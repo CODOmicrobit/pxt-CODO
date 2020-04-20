@@ -4,6 +4,24 @@ https://www.a4.fr/carte-de-prototypage-microbit-codo.html
 
 ![](icon.png)  
 
+## Examples :
+
+### Robot Control by hand
+
+Control the robot with your hand
+
+![](example/robothand.png)
+
+### Robot move until first obstable
+
+Robot go forward until the first wall
+
+![](example/robotwall.png)
+
+### Send color value to serial line
+
+![](example/robotwall.png)robotcolor
+
 ## Basic usage :
 
 ### Robot forward at 75%
@@ -23,20 +41,6 @@ CODO.robotMove(CODO.RobotDirection.Forward, 75)
 CODO.motorDir(CODO.Motors.Motor1, CODO.MotorDirection.Forward)
 CODO.motorDir(CODO.Motors.Motor2, CODO.MotorDirection.Reverse)
 ```
-
-## Examples :
-
-### Robot Control by hand
-
-Control the robot with your hand
-
-![](robothand.png)  
-
-### Robot move until first obstable
-
-
-
-### Send red color value to serial line
 
 ## API :
 
