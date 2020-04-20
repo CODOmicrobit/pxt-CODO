@@ -8,7 +8,7 @@
   "CODO.digit_bit|param|bitAddr": "value of bit number",
   "CODO.digit_bit|param|dispData": "value of number",
   "CODO.digit_clear": "Effacer le 4 digits",
-  "CODO.digit_createDisplay": "Cree un afficheur 4 digits",
+  "CODO.digit_createDisplay": "Cree un afficheur 4 digits (patte horloge, patte données)",
   "CODO.digit_createDisplay|param|clkPin": "clk pin",
   "CODO.digit_createDisplay|param|dataPin": "data pin",
   "CODO.digit_point": "Utiliser ou pas la '.' de l'afficheur 4 digits",
