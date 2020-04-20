@@ -24,6 +24,20 @@ CODO.motorDir(CODO.Motors.Motor1, CODO.MotorDirection.Forward)
 CODO.motorDir(CODO.Motors.Motor2, CODO.MotorDirection.Reverse)
 ```
 
+## Examples :
+
+### Robot Control by hand
+
+Control the robot with your hand
+
+![](robothand.png)  
+
+### Robot move until first obstable
+
+
+
+### Send red color value to serial line
+
 ## API :
 
 ### Motion :
@@ -31,10 +45,6 @@ CODO.motorDir(CODO.Motors.Motor2, CODO.MotorDirection.Reverse)
 - **function robotMove(dir: RobotDirection, speed: number)**
 
 Control Robot speed [0-100%] and direction [forward,backward,turn left, turn right ...].
-
-- **function setServoMotor(pin: AnalogPin, angle: number)**
-
-Set the servomotor position.
 
 - **function motorDir(motor: Motors, dir: MotorDirection)**
 
@@ -44,15 +54,82 @@ Change the motor direction.
 
 Change the motor speed.
 
+- **function motorStop()**
+
+Stop both motors.
+
 ### Sensors :
 
 - **function measureDistanceCentimeter(name: DigitalPin)**
 
-Return distance from ultrasonic range sensor.
+Return distance from ultrasonic range sensor (centimeter).
     
+- **function potarValue(pin: AnalogPin)**
+
+Return analog potentiometer value [0-1023].
+
 - **function color(col: Color)**
 
 Return color from i2c Grove Color Sensor v1.3 or v2.0. It autodetect the sensor version. Output value : [0;65534].
+
+- **function grove_gesture_reads()**
+
+Detect and recognize the gestures from Grove - Gesture
+* None:0
+* Right:1
+* Left:2
+* Up:3
+* Down:4
+* Forward:5
+* Backward:6
+* Clockwise:7
+* Anticlockwise:8
+* Wave:9
+(from https://github.com/Seeed-Studio/pxt-grove)
+
+- **function collisionSensor(pin: BP)**
+
+Return collision sensor state [0-1].
+
+- **function detectline(pin: DigitalPin)**
+
+Return line sensor state [0-1].
+
+- **function buttonState(pin: DigitalPin)**
+
+Return button state [0-1].
+
+### Display :
+
+- **function digit_createDisplay(clkPin: DigitalPin, dataPin: DigitalPin)**
+
+Create a new driver Grove - 4-Digit Display.
+(from https://github.com/Seeed-Studio/pxt-grove)
+
+- **function digit_show(dispData: number)**
+
+Show a 4 digits number on 4-Digit Display
+(from https://github.com/Seeed-Studio/pxt-grove)
+
+- **function digit_set(level: number)**
+
+Set the brightness level of 4-Digit Display at from 0 to 7
+(from https://github.com/Seeed-Studio/pxt-grove)
+
+- **function digit_clear()**
+
+Clear the 4-Digit Display
+(from https://github.com/Seeed-Studio/pxt-grove)
+
+- **function ledState(pin: DigitalPin, state: OnOff)**
+
+Set Led state [0-1]
+
+### Actuator :
+
+- **function setServoMotor(pin: AnalogPin, angle: number)**
+
+Set the servomotor position.
 
 ## License
 
