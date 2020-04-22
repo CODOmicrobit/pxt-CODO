@@ -1,5 +1,30 @@
+let dir = 0
+CODO.createDisplay(DigitalPin.P8, DigitalPin.P12)
+CODO.set(7)
 basic.forever(function () {
-    serial.writeLine("Red:" + CODO.color(CODO.Color.Red) + " - Blue:" + CODO.color(CODO.Color.Blue) + "- Green:" + CODO.color(CODO.Color.Green) + "- Clear:" + CODO.color(CODO.Color.Clear))
-    control.waitMicros(500000)
+    dir = CODO.grove_gesture_reads()
+    switch (dir) {
+        case 1:
+            CODO.robotMove(CODO.RobotDirection.Forward, 50)
+            control.waitMicros(1000000)
+            CODO.robotMove(CODO.RobotDirection.Stop, 0)
+            break;
+        case 2:
+            CODO.robotMove(CODO.RobotDirection.Reverse, 50)
+            control.waitMicros(1000000)
+            CODO.robotMove(CODO.RobotDirection.Stop, 0)
+            break;
+        case 3:
+            CODO.robotMove(CODO.RobotDirection.RotateLef, 25)
+            control.waitMicros(1000000)
+            CODO.robotMove(CODO.RobotDirection.Stop, 0)
+            break;
+        case 4:
+            CODO.robotMove(CODO.RobotDirection.RotateRight, 25)
+            control.waitMicros(1000000)
+            CODO.robotMove(CODO.RobotDirection.Stop, 0)
+            break;
+    }
+dir = 0
 })
 
