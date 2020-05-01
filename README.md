@@ -10,17 +10,47 @@ https://www.a4.fr/carte-de-prototypage-microbit-codo.html
 
 Control the robot with your hand
 
-![](example/robothand.png)
+```blocks
+let dir = 0
+basic.forever(function () {
+    dir = CODO.grove_gesture_reads()
+    if (dir == 1) {
+        CODO.robotMove(CODO.RobotDirection.Forward, 50)
+        control.waitMicros(1000000)
+    } else if (dir == 2) {
+        CODO.robotMove(CODO.RobotDirection.Reverse, 50)
+        control.waitMicros(1000000)
+    } else if (dir == 3) {
+        CODO.robotMove(CODO.RobotDirection.RotateLef, 50)
+        control.waitMicros(1000000)
+    } else if (dir == 4) {
+        CODO.robotMove(CODO.RobotDirection.RotateRight, 50)
+        control.waitMicros(1000000)
+    }
+})
+```
 
 ### Robot move until first obstable
 
 Robot go forward until the first wall
 
-![](example/robotwall.png)
+```blocks
+basic.forever(function () {
+    if (CODO.collisionSensor(CODO.BP.BPA) == true || CODO.collisionSensor(CODO.BP.BPB) == true) {
+        CODO.motorStop()
+    } else {
+        CODO.robotMove(CODO.RobotDirection.Forward, 50)
+    }
+})
+```
 
 ### Send color value to serial line
 
-![](example/robotcolor.png)robotcolor
+```blocks
+basic.forever(function () {
+    serial.writeNumbers([CODO.color(CODO.Color.Red), CODO.color(CODO.Color.Green), CODO.color(CODO.Color.Blue), CODO.color(CODO.Color.Clear)])
+})
+```
 
 ## Examples with JavaScript :
 
