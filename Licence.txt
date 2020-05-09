@@ -2,7 +2,7 @@ pxt-CODO - Library for Grove micro:bit project board
 
 The MIT License (MIT)
 
-Copyright (c) Microsoft Corporation
+Copyright (c) 2020, A4 Technologie
 
 All rights reserved.
 
