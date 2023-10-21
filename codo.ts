@@ -297,7 +297,7 @@ namespace CODO {
      * @param pin servomotor pin (right or left)
      */
     //% blockId=RobotDriverservodegrees
-    //% block="servomotor |%pin| to |%angle| degree"
+    //% block="servomotor |%pin| to |%angle| degre"
     //% parts="RobotDriver" advanced=false
     //% angle.shadow="protractorPicker"
     //% angle.defl=90
